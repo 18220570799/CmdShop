@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -16,7 +15,7 @@ public class Test {
 
             //File file = new File("C:\\Users\\lenovo\\IdeaProjects\\CmdShop\\src\\users.xlsx");
             InputStream in = Class.forName("Test").getResourceAsStream("/users.xlsx");
-            ReadExcel readExcel = new ReadExcel();
+            ReadUsersExcel readExcel = new ReadUsersExcel();
             User users[] = readExcel.readExcel(in);
             for (int i = 0; i < users.length; i++) {
                 if (username.equals(users[i].getUsername().trim()) && password.equals(users[i].getPassword().trim())) {
