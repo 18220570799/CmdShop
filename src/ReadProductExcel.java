@@ -9,17 +9,9 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class ReadProductExcel {
-    public static void main(String[] args) throws ClassNotFoundException {
-        InputStream in =Class.forName("Test").getResourceAsStream("/product.xlsx");
-        Product [] products=new ReadProductExcel().readExcel(in);
-        for (Product product:products){
-            System.out.print(product.getName());
-            System.out.print("\t"+product.getPrice());
-            System.out.println("\t"+product.getDescription());
-        }
-    }
+
     public Product[] readExcel(InputStream in) {
-        Product products[] = null;
+     Product products[]=null;
         try {
             XSSFWorkbook xw = new XSSFWorkbook(in);
             XSSFSheet xs = xw.getSheetAt(0);

@@ -14,13 +14,31 @@ public class Test {
             String password = sc.next();
 
             //File file = new File("C:\\Users\\lenovo\\IdeaProjects\\CmdShop\\src\\users.xlsx");
+
+
             InputStream in = Class.forName("Test").getResourceAsStream("/users.xlsx");
+
+            InputStream inPro = Class.forName("Test").getResourceAsStream("/Porduct.xlsx");
             ReadUsersExcel readExcel = new ReadUsersExcel();
             User users[] = readExcel.readExcel(in);
             for (int i = 0; i < users.length; i++) {
                 if (username.equals(users[i].getUsername().trim()) && password.equals(users[i].getPassword().trim())) {
                     System.out.println("登录成功");
                     bo=false;
+                    /*
+                    显示商品信息
+                     */
+                    ReadProductExcel readProductExcel=new ReadProductExcel();
+                    Product products[]=readProductExcel.readExcel(inPro);
+                    for (Product product:products){
+                        System.out.print(product.getID());
+                        System.out.print("\t"+product.getName());
+                        System.out.print("\t"+product.getPrice());
+                        System.out.println("\t"+product.getDescription());
+                    }
+
+                    System.out.println("请输入商品ID，把该商品加入购物车：");
+
                     break;
                 } else {
                     System.out.println("登录失败");
