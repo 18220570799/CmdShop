@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 
 public class ReadProductExcel {
 
-    public Product[] readExcel(InputStream in) {
+    public Product[] getAllProduct(InputStream in) {
      Product products[]=null;
         try {
             XSSFWorkbook xw = new XSSFWorkbook(in);
@@ -41,7 +41,38 @@ public class ReadProductExcel {
         }
         return products;
     }
+    public Product getproductById(String id,InputStream in) {
+        try {
+            XSSFWorkbook xw = new XSSFWorkbook(in);
+            XSSFSheet xs = xw.getSheetAt(0);
+            for (int j = 1; j <= xs.getLastRowNum(); j++) {
+                XSSFRow row = xs.getRow(j);
+                Product product = new Product();//每循环一次就把电子表格的一行的数据给对象赋值
+                for (int k = 0; k <= row.getLastCellNum(); k++) {
+                    XSSFCell cell = row.getCell(k);
+                    if (cell == null)
+                        continue;
+                    if (k == 0) {
+                        product.setID(this.getValue(cell));
+                    } else if (k == 1) {
+                        product.setName(this.getValue(cell));
+                    } else if (k == 2) {
+                        product.setPrice(Float.valueOf(this.getValue(cell)));//字符串改造成Float
+                    } else if (k == 3) {
+                        product.setDescription(this.getValue(cell));
+                    }
+                }
+               if (id.equals(product.getID())){
+                   return product;
+               }
+               //如果id（手动输入的）和product的id(从电子表格里读出来的)一致，则表示找到了该商品，然后返回该商品
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;//如果找不到就返回空值
+    }
     private String getValue(XSSFCell cell) {
         String value;
         CellType type = cell.getCellType();
